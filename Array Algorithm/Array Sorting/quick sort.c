@@ -37,7 +37,7 @@ int pick_pivot(int* array, int len){
     return array[middle];
 }
 
-void partition(int* array, int pivot, int len,  int* fe, int* fl) {
+void partition(int* array, int pivot, int len,  int* fe, int* fl, int* instruction) {
     int first_equal = 0, first_larger = len;
     int i = 0;
     while (i < first_larger) {
@@ -51,6 +51,8 @@ void partition(int* array, int pivot, int len,  int* fe, int* fl) {
         }else{
             i++;
         }
+
+        *instruction = *instruction + 1;
     }
 
     *fe = first_equal;
@@ -64,7 +66,7 @@ void partition(int* array, int pivot, int len,  int* fe, int* fl) {
 }
 
 
-void quicksort(int* array, int len){
+void quicksort(int* array, int len, int* instruction){
     // base case
     if (len <= 1){
         return;
@@ -73,12 +75,12 @@ void quicksort(int* array, int len){
     // recusive case
     int pivot = pick_pivot(array, len);
     int first_equal, first_larger; // noth are 0-strated index
-    partition(array, pivot, len, &first_equal, &first_larger);
+    partition(array, pivot, len, &first_equal, &first_larger, instruction);
 
     // sort left part
-    quicksort(array, first_equal);
+    quicksort(array, first_equal, instruction);
     // sort right part
-    quicksort(array+first_larger, len-first_larger);
+    quicksort(array+first_larger, len-first_larger, instruction);
 }
 
 
@@ -87,10 +89,11 @@ int main(int argc, char* argv[]){
 
     int len = sizeof(array)/sizeof(array[0]);
 
-    quicksort(array, len);
+    int instruction = 0;
+    quicksort(array, len, &instruction);
 
     for (int i=0; i<len; i++){
         printf(" %d ", array[i]);
     }
-    printf("\n");
+    printf("\n%d\n", instruction);
 }
