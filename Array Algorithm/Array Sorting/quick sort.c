@@ -1,4 +1,5 @@
 /* Sunday, 24 November 2019.
+Totla implementation time: 30min + 80min & finished with the help of the textbook
 
 Description about 3-way quick sort:
 Step1: Pick a pivot.
@@ -18,51 +19,16 @@ Average Case:            [Need mathematical proof https://secweb.cs.odu.edu/~zei
 Best Case   : O(nlgon)   [Each pivot is the middle of the partition]
 
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 
-int* quicksort(int* array){
-    int len = sizeof(array)/sizeof(array[0]);
-    // base case
-    if (len <= 1){
-        return array;
-    }
 
-    // recursive case
-    // pick a pivot
-    int pivot = pick_pivot(array, len);
-
-    // partition according to the pivot
-    int* smaller = (int*)malloc(sizeof(int));
-    int* greater = (int*)malloc(sizeof(int));
-    int* equal = (int*)malloc(sizeof(int));
-    partition(array, pivot, len, smaller, larger, equal);
-
-    // quicksort on left and right partition
-    int* sorted_smaller = quicksort(smaller)
-    int* sorted_larger = quicksort(larger)
-
-    // combine the sorted left and right partition with the middle partition
-    int* sorted_array = (int*)malloc(len*sizeof(int));
-    int len_smaller = sizeof(sorted_smaller)/sizeof(sorted_smaller[0]);
-    int len_larger = sizeof(sorted_larger)/sizeof(sorted_larger[0]);
-    int len_equal = sizeof(equal)/sizeof(equal[0]);
-    for (int i = 0; i < len_smaller; i++){
-        sorted_array[i] = sorted_smaller[i];
-    }
-    for (int i = 0; i < len_equal; i++){
-        sorted_array[i+len_smaller] = equal[i];
-    }
-    for (int i = 0; i < len_larger; i++){
-        sorted_array[i+len_smaller+len_equal] = sorted_larger[i];
-    }
-
-    // return the sorted array
-    return sorted_array;
-}
-
-void partition(int* array, int pivot, int len,  int* smaller, int* larger, int* equal) {
-    
+void swap(int* p1, int* p2) {
+    int temp = *p1;
+    *p1 = *p2;
+    *p2 = temp;
+    return;
 }
 
 int pick_pivot(int* array, int len){
@@ -71,11 +37,60 @@ int pick_pivot(int* array, int len){
     return array[middle];
 }
 
+void partition(int* array, int pivot, int len,  int* fe, int* fl) {
+    int first_equal = 0, first_larger = len;
+    int i = 0;
+    while (i < first_larger) {
+        int item = array[i];
+        if (item < pivot){
+            swap(&array[i], &array[first_equal]);
+            first_equal ++;
+            i ++;
+        }else if (item > pivot){
+            swap(&array[i], &array[--first_larger]);
+        }else{
+            i++;
+        }
+    }
+
+    *fe = first_equal;
+    *fl = first_larger;
+
+    // for (int i=0; i<len; i++){
+    //     printf("%d ", array[i]);
+    // }
+    // printf("\n");
+    return;
+}
+
+
+void quicksort(int* array, int len){
+    // base case
+    if (len <= 1){
+        return;
+    }
+
+    // recusive case
+    int pivot = pick_pivot(array, len);
+    int first_equal, first_larger; // noth are 0-strated index
+    partition(array, pivot, len, &first_equal, &first_larger);
+
+    // sort left part
+    quicksort(array, first_equal);
+    // sort right part
+    quicksort(array+first_larger, len-first_larger);
+}
+
+
 int main(int argc, char* argv[]){
     int array[8] = {4, 6, 2, 8, 1, 0 , 6, 4};
 
     int len = sizeof(array)/sizeof(array[0]);
-    int instruction = 0;
 
+    quicksort(array, len);
 
+    for (int i=0; i<len; i++){
+        printf(" %d ", array[i]);
+    }
+    printf("\n");
 }
