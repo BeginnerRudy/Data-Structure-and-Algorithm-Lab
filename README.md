@@ -27,7 +27,7 @@ This is the repo for storing my own implementation of data structure and algorit
 - [x] Quick Sort (C)
 - [ ] Merge Sort
 - [ ] Heap Sort
-### String Search
-- [ ] KMP search
+### String Pattern Search
+- [x] KMP search
 - [ ] BMH search
-- [ ] Suffix Array/Indexing
+- [ ] Suffix Array
