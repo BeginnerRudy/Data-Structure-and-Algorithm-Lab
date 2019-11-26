@@ -53,6 +53,10 @@ node_t* find_node_before(list_t* list, node_t* node);
 void print_linked_list_head_to_tail(list_t* list);
 // print the linked list from tail to head one by one.
 void print_linked_list_tail_to_head(list_t* list);
+// seach for a given data, if not found return NULL
+node_t* search_list(list_t* list, void* data);
+// delete the first occurence of a given data if exists;
+node_t* remove_from_list(list_t* list, void* data);
 
 /*                      The Main Function                               */
 int main(int argc, char* argv[]){
@@ -72,9 +76,20 @@ int main(int argc, char* argv[]){
         printf("List is not empty.\n");
         // printf("The head is %d\n", *(int*)pop_head(list));
         printf("The tail is %d\n", *(int*)pop_tail(list));
+        int y = 14;
+        remove_from_list(list, &y);
         print_linked_list_head_to_tail(list);
         print_linked_list_tail_to_head(list);
     }
+
+    int x = 13;
+    node_t *result = search_list(list, &x);
+    if (result==NULL){
+        printf("%d is not found in the list\n", x);
+    }else{
+        printf("%d is found in the list\n", x);
+    }
+
 
     return 0;
 }
@@ -236,4 +251,53 @@ node_t* find_node_before(list_t* list, node_t* node){
     }
 
     return curr_node;
+}
+
+node_t* search_list(list_t* list, void* data){
+    assert(list!=NULL);
+    if(list->head==NULL){
+        return NULL;
+    }else{
+        node_t* node = list->head;
+        while (node!=NULL) {
+            if (*(int*)(node->data) == *(int*)data){
+                return node;
+            }
+            node = node->next;
+        }
+    }
+    return NULL;
+}
+
+
+node_t* remove_from_list(list_t* list, void* data){
+    assert(list!=NULL);
+    node_t* node;
+    if (list->head==NULL){
+        return NULL;
+    }else{
+        node = list->head;
+        while (node!=NULL) {
+            if (*(int*)(node->data) == *(int*)data){
+                break;
+            }
+            node = node->next;
+        }
+    }
+
+    if (node!=NULL){
+        if (list->head == node){
+            pop_head(list);
+        }else{
+            node_t* prev_node = find_node_before(list, node);
+            if (list->tail == node){
+                list->tail = prev_node;
+                prev_node->next = NULL;
+            }else{
+                prev_node->next = node->next;
+            }
+        }
+    }
+
+    return node;
 }
