@@ -6,6 +6,8 @@ This is the repo for storing my own implementation of data structure and algorit
 
 # Data Structure
 ## Linked List
+- [x]One-Way Linked List (c)
+- [ ]Two-Way Linked List
 ## Stack
 ## Queue
 ### Priority Queue
@@ -28,6 +30,6 @@ This is the repo for storing my own implementation of data structure and algorit
 - [ ] Merge Sort
 - [ ] Heap Sort
 ### String Pattern Search
-- [x] KMP search
+- [x] KMP search (C)
 - [ ] BMH search
 - [ ] Suffix Array
