@@ -6,8 +6,9 @@ This is the repo for storing my own implementation of data structure and algorit
 
 # Data Structure
 ## Linked List
-- [x]One-Way Linked List (c)
-- [ ]Two-Way Linked List
+- [x] One-Way Linked List (c)
+- [ ] Two-Way Linked List
+- [ ] Circular Likned List
 ## Stack
 ## Queue
 ### Priority Queue
@@ -33,3 +34,4 @@ This is the repo for storing my own implementation of data structure and algorit
 - [x] KMP search (C)
 - [ ] BMH search
 - [ ] Suffix Array
+  
