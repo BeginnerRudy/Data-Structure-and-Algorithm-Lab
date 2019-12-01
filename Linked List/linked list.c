@@ -1,4 +1,4 @@
-/* Tuesday, 26 November 2019. Cost: 2hours
+/* Tuesday, 26 November 2019. Cost: 2.5 hours
 
 Implementation of one-way linked list
 
@@ -270,9 +270,9 @@ node_t* search_list(list_t* list, void* data){
 }
 
 
-node_t* remove_from_list(list_t* list, void* data){
+node_t *remove_from_list(list_t* list, void* data){
     assert(list!=NULL);
-    node_t* node;
+    node_t *node;
     if (list->head==NULL){
         return NULL;
     }else{
